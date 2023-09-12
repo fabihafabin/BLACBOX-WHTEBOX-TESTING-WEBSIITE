@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Black Box</title>
+{% endblock title %}
+
+{% block body %}
+<style>
+    label {
+        margin-left: 15px;
+
+    }
+</style>
+
+<div class="grid grid-cols-2 relative">
+
+    <form class="flex gap-5" id="form">
+        <div class="flex flex-col items-center" id="image-form">
+            <img id="preview" class="h-[700px] w-[393px] mx-4 rounded-xl border border-solid border-black">
+            <input required type="file" name="image" id="image" accept="image/*"
+                class="file-input w-full max-w-xs my-2 text-white text-xl">
+        </div>
+        <div class="flex flex-col justify-around ">
+            <div class="flex flex-col gap-7 text-black p-2 font-semibold  text-3xl bg-slate-200 rounded-xl">
+                <div> <input type="radio" name="type" id="login" value="0" class="radio radio-primary radio-md"
+                        required><label for="login">Signup/Login</label></div>
+                <div> <input required type="radio" name="type" id="shop" value="1"
+                        class="radio radio-primary radio-md"><label for="shop">E-commerce/Shop</label></div>
+                <div> <input required type="radio" name="type" id="map" value="2"
+                        class="radio radio-primary radio-md"><label for="map">Map/Camera</label></div>
+                <div> <input required type="radio" name="type" id="social" value="3"
+                        class="radio radio-primary radio-md"><label for="social">Social Media/Gallery</label></div>
+                <div>
+                    <input required type="radio" name="type" id="other" value="4"
+                        class="radio radio-primary radio-md"><label for="other">Other</label>
+                </div>
+            </div>
+            <div class="bg-slate-200 rounded-xl flex justify-center items-center mb-20 p-20 gap-1">
+                <button class="btn btn-neutral btn-lg" id="clear">Clear</button>
+                <button class="btn btn-neutral btn-lg" id="process" type="button">Process</button>
+            </div>
+        </div>
+    </form>
+    <div class="ml-11 flex flex-col gap-6 mr-3 mb-3">
+        <div
+            class="text-white text-3xl p-5 flex flex-col gap-6 justify-center items-center bg-slate-200 rounded-xl font-bold">
+            <div class="bg-slate-400 p-4 rounded-md" id="low">Low</div>
+            <div class="bg-slate-400 p-4 rounded-md" id="very-low">Very Low</div>
+            <div class="bg-slate-400 p-4 rounded-md" id="medium">Medium</div>
+            <div class="bg-slate-400 p-4 rounded-md" id="high">High</div>
+            <div class="bg-slate-400 p-4 rounded-md" id="very-high">Very High</div>
+        </div>
+        <div class="bg-slate-200 rounded-xl w-full h-full flex justify-center items-center">
+            <p class="text-5xl text-lime-500 font-bold"
+            id="msg-box">hi</p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

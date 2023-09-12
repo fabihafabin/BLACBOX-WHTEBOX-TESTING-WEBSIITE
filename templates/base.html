@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+
+                    },
+                    backgroundImage: {
+
+                    }
+
+                },
+            },
+        };
+    </script>
+    {% block title %}
+
+    {% endblock title %}
+    <style>
+        :root {
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body class="relative">
+    <div class="navbar bg-base-100 mb-5 h-auto">
+        <div class="navbar-start">
+          <a class="btn btn-ghost normal-case text-2xl text-yellow-50">DeepTestDroid</a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+          <ul class="menu menu-horizontal px-1">
+            <li class="text-2xl font-semibold text-yellow-50"><a href="{% url 'black' %}">Black Box</a></li>
+            <li class="text-2xl font-semibold text-yellow-50"><a href="{% url 'white' %}">White Box</a></li>
+          </ul>
+        </div>
+      </div>
+    <div class="absolute bg-slate-800 inset-0 z-10 opacity-70 flex justify-center items-center" id="load">
+        <span class="loading loading-ring loading-lg w-24"></span>
+    </div>
+    {% block body %}
+
+    {% endblock body %}
+
+    <script>
+        $('#load').hide()
+        $(document).ready(() => {
+            $("#image").change(function () {
+                const file = this.files[0];
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = function (event) {
+                        $("#preview")
+                            .attr("src", event.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+        });
+        $("#clear").click(function () {
+            $("#image").val('');
+            $("#preview").removeAttr('src');
+            $("#msg-box").html("hi");
+            try{
+                $('#low').removeClass('bg-pink-500');
+                $('#very-low').removeClass('bg-pink-500');
+                $('#medium').removeClass('bg-pink-500');
+                $('#high' ).removeClass('bg-pink-500');
+                $('#very-high').removeClass('bg-pink-500');
+            }
+            catch(err){
+                console.log(err)
+            }
+            try{
+                $("input[type='radio']").prop('checked', false)
+            }
+            catch(err){
+                console.log(err)
+            }
+            try{
+                $("#row").html("");
+            }catch(err){
+                console.log(err)
+            }
+
+           
+        });
+
+        $("#process").on("click", function () {
+            var form = $("#form")[0];
+            var formData = new FormData(form);
+            console.log(formData);
+
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: formData,
+                processData: false,
+                contentType: false,
+                processData: false,
+                contentType: false,
+                // async: false,
+                cache: false,
+                success: function (response) {
+                    console.log(response);
+                    $("#msg-box").html(response.message);
+                    $('#' + response['class']).addClass('bg-pink-500');
+                },
+                error: function (xhr) {
+                    alert("File upload failed.");
+                },
+                beforeSend: function () {
+                    $('#load').show();
+                },
+                complete: function () {
+                    $('#load').hide();
+                }
+
+            });
+
+        });
+        $("#form_button").on("click", function () {
+            var form = $("#form_2")[0];
+            var formData = new FormData(form);
+            console.log(formData);
+
+            $.ajax({
+                type: "POST",
+                url: "",
+                data: formData,
+                processData: false,
+                contentType: false,
+                processData: false,
+                contentType: false,
+                // async: false,
+                cache: false,
+                success: function (response) {
+                    //console.log(response);
+                    output="";
+                    for (const key in response) {
+                        if (Object.hasOwnProperty.call(response, key)) {
+                            const element = response[key];
+                            output+=`<tr><td class="font-bold text-xl">${key}</td><td class="font-bold text-xl">${element}</td></tr>`
+                        }
+                    }
+                    $("#row").html(output);
+
+                },
+                error: function (xhr) {
+                    alert("failed.");
+                },
+                beforeSend: function () {
+                    $('#load').show();
+                },
+                complete: function () {
+                    $('#load').hide();
+                }
+
+            });
+
+        });
+    </script>
+</body>
+
+</html>
